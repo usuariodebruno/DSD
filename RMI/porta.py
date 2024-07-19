@@ -9,9 +9,10 @@ state = 1
 objRemotoDoor = Pyro4.Proxy("PYRONAME:Door")
 
 objRemotoDoor.registry(name, state)
+
 while 1: 
-    print 'Qual o estado da porta?'
-    print '1 para aberto'
-    print '0 para fechado'
+    print ('Qual o estado da porta?')
+    print ('1 para aberto')
+    print ('0 para fechado')
     newState = input()
     objRemotoDoor.setNewState(newState)
