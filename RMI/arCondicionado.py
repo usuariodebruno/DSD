@@ -22,16 +22,16 @@ class Window(object):
         window.name = name
         global stateWindow
         stateWindow = state
-        print ("Janela registrada")
+        print("Janela registrada")
 	
     def setNewState(self, newState):
-        print ('newState lado ar condicionado(server): ', newState)
+        print('newState lado ar condicionado(server): ', newState)
         arCondicionado = ArCondicionado()
         global stateWindow
         stateWindow = newState
-        print ('stateWindow depois de ser mudado: ', stateWindow)
+        print('stateWindow depois de ser mudado: ', stateWindow)
         arCondicionado.checkDoorWindow()
-        print ("Set new state")
+        print("Set new state")
 
 
 @Pyro4.expose 
@@ -43,30 +43,48 @@ class Door(object):
         door.name = name
         global stateDoor
         stateDoor = state
-        print ("Porta registrada")
+        print("Porta registrada")
 	
     def setNewState(self, newState):
         arCondicionado = ArCondicionado()
         global stateDoor
         stateDoor = newState
         arCondicionado.checkDoorWindow()
-        print ("Set new state")
+        print("Set new state")
 
 
-class ArCondicionado(object):
-	
+class ArCondicionado(object):	
     def setNewState(self, newState):
         arCondicionado = ArCondicionado()
         arCondicionado.state = newState
-        print ("Ar condicionado está ", newState)
-        print( "...")
+        print("Ar condicionado está ", newState)
+        print("...")
 
     def checkDoorWindow(self):
         arCondicionado = ArCondicionado()
-        print ('stateDoor ', stateDoor)
-        print ('stateWindow ',  stateWindow)
-        if (stateDoor == CLOSE and stateWindow == CLOSE):
+        print('stateDoor ', stateDoor)
+        print('stateWindow ', stateWindow)
+        if stateDoor == CLOSE and stateWindow == CLOSE:
             arCondicionado.setNewState(LIGADO)
-        else: arCondicionado.setNewState(DESLIGADO)
+        else:
+            arCondicionado.setNewState(DESLIGADO)
 
-Pyro4.Daemon.serveSimple({Window: "Window", Door: "Door"})
+ip_address = '10.25.2.138'
+port = 9090
+daemon = Pyro4.Daemon(host=ip_address, port=port)
+
+# Registra os objetos com o Daemon
+daemon.register(Window, "Window")
+daemon.register(Door, "Door")
+
+nameserver = Pyro4.locateNS(host=ip_address, port=port)
+
+# Registra os objetos com o nameserver
+uri_window = daemon.registered["Window"]
+uri_door = daemon.registered["Door"]
+nameserver.register("Window", uri_window)
+nameserver.register("Door", uri_door)
+
+# Inicia o servidor
+print("Ready. Object URI =", uri_window)
+daemon.requestLoop()
