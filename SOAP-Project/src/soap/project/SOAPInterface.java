@@ -17,4 +17,6 @@ import javax.jws.soap.SOAPBinding;
 @SOAPBinding(style=SOAPBinding.Style.RPC)
 public interface SOAPInterface {
     @WebMethod String olaMundo(String nome);
+    @WebMethod String gerarSenha(int comprimento, boolean incluirNumeros, boolean incluirCaracteresEspeciais);
+
 }

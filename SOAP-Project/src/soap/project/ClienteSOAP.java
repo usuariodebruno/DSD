@@ -26,6 +26,8 @@ public class ClienteSOAP {
             
             String nome = "Bruno";
             System.out.println("Resposta: " + calc.olaMundo(nome));
+            System.out.println("Resposta: " + calc.gerarSenha(8, false, false));
+            System.out.println("Resposta: " + calc.gerarSenha(12, true, true));
             
         }catch(MalformedURLException mue){
             mue.printStackTrace();
