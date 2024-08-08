@@ -18,16 +18,16 @@ public class ClienteSOAP {
     public static void main(String args[]){
         
         try{
-            URL url = new URL("http://10.25.3.222:9876/calcsoap?wsdl");
-            QName qname = new QName("http://soap/", "ServicoCalculadoraService");
+            URL url = new URL("http://10.25.2.65:9877/geraSenha?wsdl");
+            QName qname = new QName("http://soap/", "ServidorSOAPService");
             
             Service ws = Service.create(url, qname);
             SOAPInterface calc = ws.getPort(SOAPInterface.class);            
             
             String nome = "Bruno";
             System.out.println("Resposta: " + calc.olaMundo(nome));
-            System.out.println("Resposta: " + calc.gerarSenha(8, false, false));
-            System.out.println("Resposta: " + calc.gerarSenha(12, true, true));
+            System.out.println("Senha: " + calc.gerarSenha(8, false, false));
+            System.out.println("Senha forte: " + calc.gerarSenha(12, true, true));
             
         }catch(MalformedURLException mue){
             mue.printStackTrace();

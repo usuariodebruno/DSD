@@ -18,7 +18,7 @@ public class SOAPProject {
      */
     public static void main(String[] args) {
        Endpoint.publish(
-            "http://10.26.98.188:9876/calcsoap", 
+            "http://10.25.2.65:9877/geraSenha", 
             new ServidorSOAP()
         );
         System.out.println("Servico em execucao...");

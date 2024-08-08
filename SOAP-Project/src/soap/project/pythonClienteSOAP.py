@@ -3,16 +3,21 @@
 from zeep import Client
 
 # URL do WSDL
-wsdl = 'http://localhost:8080/geradorsenha?wsdl'
+wsdl = 'http://10.25.2.65:9877/geraSenha?wsdl'
 
 # Criar o cliente utilizando o WSDL
 client = Client(wsdl=wsdl)
 
-# Chamar o método gerarSenha com os parâmetros desejados
-senha_simples = client.service.gerarSenha(8, False, False)
-senha_complexa = client.service.gerarSenha(12, True, True)
+quantidade = int(input('Informe a quantidade de caracteres para sua senha: '))
 
-# Exibir as senhas geradas
-print("Sua senha foi gerada:" )
-print(f"Senha Simples: {senha_simples}")
-print(f"Senha Complexa: {senha_complexa}")
+caracteres_especiais = input('Deseja incluir caracteres especiais na senha? (s/n): ').strip().lower() == 's'
+caracteres_maiusculos = input('Deseja incluir caracteres maiúsculos na senha? (s/n): ').strip().lower() == 's'
+
+# Chama o método gerarSenha com os valores fornecidos pelo usuário
+senha = client.service.gerarSenha(quantidade, caracteres_especiais, caracteres_maiusculos)
+
+print(f'Sua senha gerada é: {senha}')
+
+nome = input('Informe seu nome: ')
+print(f'Sua senha gerada é: {client.service.olaMundo(nome)} ')
+

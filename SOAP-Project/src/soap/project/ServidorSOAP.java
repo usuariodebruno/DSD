@@ -28,6 +28,7 @@ public class ServidorSOAP implements SOAPInterface{
     }
 
     private SecureRandom random = new SecureRandom();
+    
     @Override
     public String gerarSenha(int comprimento, boolean incluirNumeros, boolean incluirCaracteresEspeciais) {
         StringBuilder caracteresPermitidos = new StringBuilder(LETRAS);
