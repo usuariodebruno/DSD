@@ -11,7 +11,7 @@ def consumir_pedido():
         pedido = json.loads(body)
         print(f"[x] Processando pedido {pedido['pedido_id']}")
         # Simula o processamento (ex: verificar estoque, atualizar status, etc.)
-        print(f"[x] Pedido {pedido['pedido_id']} processado")
+        print(f"[x] Pedido {pedido['pedido_id']} do cliente {pedido['cliente']} no valor de {pedido['valor_total']} processado")
 
     # Consumidores competem para pegar mensagens da mesma fila
     channel.basic_consume(queue='fila_pedidos', on_message_callback=callback, auto_ack=True)
